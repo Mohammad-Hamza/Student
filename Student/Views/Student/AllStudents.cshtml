@@ -1,0 +1,121 @@
+﻿
+@{ ViewData["Title"] = "AllStudents"; }
+@model IEnumerable<Studenttbl>
+
+
+<div class="row">
+    <div class="col-lg-10">
+        <h2>AllStudents</h2>
+    </div>
+    <div class="col-md-2" align="right">
+        <br />
+        <a asp-action="AddStudent" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>New Student</a>
+    </div>
+</div>
+
+<form class="form-inline" asp-action="AllStudents" method="post">
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="StudentId">StudentId</label>
+                <input type="number" class="form-control" id="StudentId" name="" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Firstname">Firstname</label>
+                <input type="text" class="form-control" id="Firstname" name="FirstName" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Lastname">Lastname</label>
+                <input type="text" class="form-control" id="Lastname" name="Lastname" />
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Dept">Dept</label>
+                <input type="text" class="form-control" id="Dept" name="Dept" />
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <div class="form-group">
+                <label for="Rollno">Rollno</label>
+                <input type="text" class="form-control" id="Rollno" name="Rollno" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+    </div>
+</form>
+
+<br />
+
+<table id="studentTable" name="studentTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>StudentId</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Dept</th>
+            <th>Rollno</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Studenttbl in Model)
+        {
+<tr>
+    <td>@Studenttbl.StudentId</td>
+    <td>@Studenttbl.Firstname</td>
+    <td>@Studenttbl.Lastname</td>
+    <td>@Studenttbl.Dept</td>
+    <td>@Studenttbl.Rollno</td>
+   
+    <td>
+        <a href="/Student/StudentDetail?Id=@Studenttbl.StudentId" class="btn btn-success">Details</a>
+        <a href="#" data-studenttblId="@Studenttbl.StudentId" class="btn btn-danger DeleteStudent"><span class="glyphicon glyphicon-floppy-remove"></span> Delete</a>
+    </td>
+</tr>}
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>$().ready(function () {
+            $('#studentTable').DataTable();
+        });
+
+        $(function () {
+            $('.DeleteStudent').click(function () {
+                var ClickedButton = $(this);
+                var StudentId = ClickedButton.data('studentid');
+                ClickedButton.text('Please Wait');
+                $.ajax({
+                    url: "/Student/DeleteStudentByAjax",
+                    type: "POST",
+                    data: {
+                        Id: StudentId
+                    },
+                    complete: function (result) {
+                        if (result.responseText === "Yes") {
+                            alert("Student with ID " + StudentId + " was deleted succefully");
+                            ClickedButton.parent().parent().fadeOut(2000);
+
+                        } else {
+                            alert("Error! could not delte student");
+                            ClickedButton.children().addClass('glyphicon glyphicon-floppy-remove');
+                            ClickedButton.text('Delete');
+                        }
+                    }
+
+                });
+            });
+        });</script>
+}

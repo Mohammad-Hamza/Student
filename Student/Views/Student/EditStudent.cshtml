@@ -1,0 +1,61 @@
+﻿@model Student.Models.Studenttbl
+
+@{ ViewData["Title"] = "EditStudent"; }
+
+<h2>EditStudent</h2>
+
+@if (ViewBag.MessageSucess != null)
+{
+<h3 class="alert-success"><span class="glyphicon glyphicon-ok-circle"></span> @ViewBag.MessageSucess</h3> }
+            else
+            {
+                if (ViewBag.MessageFailure != null)
+                {
+<h3 class="alert-danger"><span class="glyphicon glyphicon-remove-circle"></span> @ViewBag.MessageFailure</h3>}
+            }
+
+<h4>@Model.StudentId</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditStudent" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StudentId" />
+            <div class="form-group">
+                <label asp-for="StudentId" class="control-label"></label>
+                <input asp-for="StudentId" class="form-control" readonly />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Firstname" class="control-label"></label>
+                <input asp-for="Firstname" class="form-control" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname" class="control-label"></label>
+                <input asp-for="Lastname" class="form-control" />
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dept" class="control-label"></label>
+                <input asp-for="Dept" class="form-control" />
+                <span asp-validation-for="Dept" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rollno" class="control-label"></label>
+                <input asp-for="Rollno" class="form-control" />
+                <span asp-validation-for="Rollno" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save and Update" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllStudents" class="btn btn-primary">Back to List</a>
+</div>
+

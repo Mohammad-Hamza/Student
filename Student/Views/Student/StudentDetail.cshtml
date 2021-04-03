@@ -1,0 +1,76 @@
+﻿@model Student.Models.Studenttbl
+@using Student.Controllers;
+@{ ViewData["Title"] = "StudentDetail"; }
+
+<h2>StudentDetail</h2>
+
+<div>
+    <div class="col-md-6">
+
+        <div>
+            <h4>@Model.Firstname</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                
+                <dt>
+                    @Html.DisplayNameFor(model => model.Firstname)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Firstname)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Lastname)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Lastname)
+                </dd>
+                 <dt>
+                    @Html.DisplayNameFor(model => model.Dept)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Dept)
+                </dd>
+                 <dt>
+                    @Html.DisplayNameFor(model => model.Rollno)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rollno)
+                </dd>
+
+            </dl>
+        </div>
+        <div>
+            <a asp-action="AllStudents" class="btn btn-primary"><span class="glyphicon glyphicon-list"></span> All Students</a> |
+            <a asp-action="EditStudent" asp-route-id="@Model.StudentId" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit Student</a>
+            <a asp-action="DeleteStudent" asp-route-id="@Model.StudentId" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-remove"></span> Delete Student</a>
+        </div>
+    </div>
+
+
+    <div class="col-md-6" id="StudentsNamesDiv">
+
+    </div>
+</div>
+
+
+
+
+<div id="AdDiv">
+
+</div>
+
+
+@section Scripts
+        {
+
+    <script>
+        $(function () {
+
+            $('#AdDiv').load("/Student/ShowAd");
+            $('#StudentsNamesDiv').load('@nameof(StudentController.GetStudentsNames)');
+
+        });
+
+    </script>
+
+}
